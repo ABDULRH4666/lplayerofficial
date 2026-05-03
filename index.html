@@ -1275,83 +1275,29 @@
   </div>
 </section>
 
-<!-- SUGGESTIONS -->
-<div class="divider"></div>
-<section id="contact">
-  <div class="section-title">💬 تواصل معي واقتراحاتك</div>
-  <div class="contact-grid">
-    <div class="contact-card">
-      <div class="contact-icon">💡</div>
-      <h3>اقتراحاتك تهمني</h3>
-      <p>شاركني أفكارك لتحسين الموقع وما تريد رؤيته</p>
-      
-      <!-- إضافة حقل الاسم لتعرف من أرسل لك -->
-      <input type="text" id="userName" class="contact-input" placeholder="اسمك" style="min-height: 45px; margin-bottom: 10px; height: 45px;">
-      
-      <textarea class="contact-input" id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
-      
-      <button class="contact-btn" id="submit-btn" onclick="sendSuggestion()">إرسال الاقتراح 🚀</button>
-      <div id="suggestionMsg" class="suggestion-msg" style="display:none"></div>
+<div class="contact-section">
+    <h2>💬 تواصل معي واقتراحاتك</h2>
+
+    <div class="suggestions">
+        <h3>💡 اقتراحاتك تهمني</h3>
+        <p>شاركني أفكارك لتحسين الموقع وما تريد رؤيته</p>
+        
+        <a href="mailto:b10393588@gmail.com?subject=اقتراح بخصوص الموقع" class="btn-suggestion">
+            إرسال الاقتراح 🚀
+        </a>
     </div>
 
-    <div class="contact-card">
-      <div class="contact-icon">🎮</div>
-      <h3>تابعني على تيك توك</h3>
-      <p>كل جديد في عالم Free Fire ستجده على حسابي</p>
-      <a href="https://www.tiktok.com/@lplayer_official" target="_blank" class="tiktok-btn">
-        🎮 @lplayer_official
-      </a>
-      <div class="coming-soon">🔔 قريباً على جميع المنصات!</div>
+    <div class="social-media">
+        <h3>🎮 تابعني على تيك توك</h3>
+        <p>كل جديد في عالم Free Fire ستجده على حسابي</p>
+        <a href="https://www.tiktok.com/@lplayer_official" target="_blank">
+            🎮 @lplayer_official
+        </a>
+        <p>🔔 قريباً على جميع المنصات!</p>
     </div>
-  </div>
-</section>
+</div>
 
-<!-- كود البرمجة التشغيلي -->
-<script>
-function sendSuggestion() {
-    const btn = document.getElementById('submit-btn');
-    const name = document.getElementById('userName').value;
-    const suggestion = document.getElementById('suggestionText').value;
-    const msgDiv = document.getElementById('suggestionMsg');
 
-    if (!name || !suggestion) {
-        alert("يرجى كتابة اسمك واقتراحك");
-        return;
-    }
-
-    btn.innerText = "جاري الإرسال...";
-    btn.disabled = true;
-
-    // هذه البيانات هي التي ستصل لبريدك
-    const templateParams = {
-        from_name: name,
-        message: suggestion,
-        reply_to: "b10393588@gmail.com" 
-    };
-
-    // تأكد من وضع Service ID و Template ID الصحيحين من حسابك في EmailJS
-    emailjs.send('service_9y9u6of', 'template_p9y9c6q', templateParams)
-        .then(function(response) {
-            msgDiv.style.display = "block";
-            msgDiv.innerText = "✅ تم استلام اقتراحك بنجاح! شكراً لك.";
-            btn.innerText = "تم الإرسال 👍";
-            
-            // تفريغ الحقول
-            document.getElementById('userName').value = "";
-            document.getElementById('suggestionText').value = "";
-            
-            setTimeout(() => {
-                msgDiv.style.display = "none";
-                btn.innerText = "إرسال الاقتراح 🚀";
-                btn.disabled = false;
-            }, 4000);
-        }, function(error) {
-            alert("فشل الإرسال: " + JSON.stringify(error));
-            btn.innerText = "حاول مجدداً";
-            btn.disabled = false;
-        });
-}
-</script>
 <!-- NICKNAME GENERATOR -->
 <div class="divider"></div>
 <section id="nickname">
