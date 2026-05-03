@@ -1293,7 +1293,7 @@
       <button class="contact-btn" id="submit-btn" onclick="sendSuggestion()">إرسال الاقتراح 🚀</button>
       <div id="suggestionMsg" class="suggestion-msg" style="display:none"></div>
       
-      <!-- تمت إضافة رابط البريد الإلكتروني المطلوب -->
+      <!-- رابط البريد المباشر -->
       <div style="margin-top: 20px; font-size: 0.85rem; color: #aaa;">
         📧 أو تواصل مباشرة عبر البريد: 
         <a href="mailto:louaibouaita7915@gmail.com" style="color: var(--gold); text-decoration: none; font-weight: bold;">
@@ -1314,49 +1314,7 @@
   </div>
 </section>
 
-<!-- (بقية الكود كما هو دون أي تغيير) -->
-<script>
-function sendSuggestion() {
-    const btn = document.getElementById('submit-btn');
-    const name = document.getElementById('userName').value;
-    const suggestion = document.getElementById('suggestionText').value;
-    const msgDiv = document.getElementById('suggestionMsg');
-
-    if (!name || !suggestion) {
-        alert("يرجى كتابة اسمك واقتراحك");
-        return;
-    }
-
-    btn.innerText = "جاري الإرسال...";
-    btn.disabled = true;
-
-    const templateParams = {
-        from_name: name,
-        message: suggestion,
-        reply_to: "b10393588@gmail.com" 
-    };
-
-    emailjs.send('service_9y9u6of', 'template_p9y9c6q', templateParams)
-        .then(function(response) {
-            msgDiv.style.display = "block";
-            msgDiv.innerText = "✅ تم استلام اقتراحك بنجاح! شكراً لك.";
-            btn.innerText = "تم الإرسال 👍";
-            
-            document.getElementById('userName').value = "";
-            document.getElementById('suggestionText').value = "";
-            
-            setTimeout(() => {
-                msgDiv.style.display = "none";
-                btn.innerText = "إرسال الاقتراح 🚀";
-                btn.disabled = false;
-            }, 4000);
-        }, function(error) {
-            alert("فشل الإرسال: " + JSON.stringify(error));
-            btn.innerText = "حاول مجدداً";
-            btn.disabled = false;
-        });
-}
-</script>
+<!-- (باقي الأقسام كما هي بدون تغيير) -->
 <!-- NICKNAME GENERATOR -->
 <div class="divider"></div>
 <section id="nickname">
@@ -1846,22 +1804,47 @@ function sendSuggestion() {
     });
   }
 
-  // SUGGESTION + EMAIL
+  // دالة إرسال الاقتراح - ترسل الاسم والمحتوى فقط
   function sendSuggestion() {
-    const text = document.getElementById('suggestionText').value.trim();
-    if (!text) { alert('من فضلك اكتب اقتراحك أولاً!'); return; }
-    emailjs.send('lplayerofficial', 'template_a0l9ad7', {
-      subject: '💡 اقتراح جديد من الموقع!',
-      character: 'اقتراح من زائر',
-      results: text,
-      total: '',
-      to_email: 'louaibouaita7915@gmail.com'
-    });
-    document.getElementById('suggestionText').value = '';
-    const msg = document.getElementById('suggestionMsg');
-    msg.style.display = 'block';
-    msg.textContent = '✅ شكراً! تم إرسال اقتراحك مباشرة لـ lplayer 🙏🔥';
-    setTimeout(() => { msg.style.display = 'none'; }, 4000);
+    const btn = document.getElementById('submit-btn');
+    const name = document.getElementById('userName').value.trim();
+    const suggestion = document.getElementById('suggestionText').value.trim();
+    const msgDiv = document.getElementById('suggestionMsg');
+
+    if (!name || !suggestion) {
+        alert("يرجى كتابة اسمك واقتراحك");
+        return;
+    }
+
+    btn.innerText = "جاري الإرسال...";
+    btn.disabled = true;
+
+    // البيانات المرسلة: الاسم والمحتوى فقط
+    const templateParams = {
+        from_name: name,
+        message: suggestion
+    };
+
+    emailjs.send('service_9y9u6of', 'template_p9y9c6q', templateParams)
+        .then(function() {
+            msgDiv.style.display = "block";
+            msgDiv.innerText = "✅ تم استلام اقتراحك بنجاح! شكراً لك.";
+            btn.innerText = "تم الإرسال 👍";
+            
+            document.getElementById('userName').value = "";
+            document.getElementById('suggestionText').value = "";
+            
+            setTimeout(() => {
+                msgDiv.style.display = "none";
+                btn.innerText = "إرسال الاقتراح 🚀";
+                btn.disabled = false;
+            }, 4000);
+        })
+        .catch(function(error) {
+            alert("فشل الإرسال: " + JSON.stringify(error));
+            btn.innerText = "حاول مجدداً";
+            btn.disabled = false;
+        });
   }
 
   // PWA Install prompt
