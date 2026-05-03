@@ -550,7 +550,7 @@
     .poll-bar-wrap { flex: 1; background: #ffffff11; border-radius: 6px; height: 8px; overflow: hidden; }
     .poll-bar { height: 100%; background: linear-gradient(90deg, var(--fire), var(--gold)); border-radius: 6px; width: 0%; transition: width 0.6s ease; }
     .poll-pct { font-size: 0.9rem; color: var(--gold); font-weight: 700; min-width: 36px; text-align: left; }
-    .poll-msg { text-align: center; padding: 16px; background: #FF450022; border-radius: 14px; font-size: 1.1rem; color: var(--gold); font-weight: 700; }
+    .poll-msg { text-align: center; padding: 16px; background: #FF450022; border-radius: 14px; color: var(--gold); font-weight: 700; }
 
     /* QUIZ */
     .quiz-container { max-width: 600px; margin: 0 auto; background: var(--card); border-radius: 20px; padding: 30px; border: 1px solid #FF450022; }
@@ -1275,29 +1275,88 @@
   </div>
 </section>
 
-<div class="contact-section">
-    <h2>💬 تواصل معي واقتراحاتك</h2>
-
-    <div class="suggestions">
-        <h3>💡 اقتراحاتك تهمني</h3>
-        <p>شاركني أفكارك لتحسين الموقع وما تريد رؤيته</p>
-        
-        <a href="mailto:mailto:louaibouaita7915@gmail.com?subject=اقتراح بخصوص الموقع" class="btn-suggestion">
-            إرسال الاقتراح 🚀
+<!-- SUGGESTIONS -->
+<div class="divider"></div>
+<section id="contact">
+  <div class="section-title">💬 تواصل معي واقتراحاتك</div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">💡</div>
+      <h3>اقتراحاتك تهمني</h3>
+      <p>شاركني أفكارك لتحسين الموقع وما تريد رؤيته</p>
+      
+      <!-- حقل الاسم -->
+      <input type="text" id="userName" class="contact-input" placeholder="اسمك" style="min-height: 45px; margin-bottom: 10px; height: 45px;">
+      
+      <textarea class="contact-input" id="suggestionText" placeholder="اكتب اقتراحك هنا..."></textarea>
+      
+      <button class="contact-btn" id="submit-btn" onclick="sendSuggestion()">إرسال الاقتراح 🚀</button>
+      <div id="suggestionMsg" class="suggestion-msg" style="display:none"></div>
+      
+      <!-- تمت إضافة رابط البريد الإلكتروني المطلوب -->
+      <div style="margin-top: 20px; font-size: 0.85rem; color: #aaa;">
+        📧 أو تواصل مباشرة عبر البريد: 
+        <a href="mailto:louaibouaita7915@gmail.com" style="color: var(--gold); text-decoration: none; font-weight: bold;">
+          louaibouaita7915@gmail.com
         </a>
+      </div>
     </div>
 
-    <div class="social-media">
-        <h3>🎮 تابعني على تيك توك</h3>
-        <p>كل جديد في عالم Free Fire ستجده على حسابي</p>
-        <a href="https://www.tiktok.com/@lplayer_official" target="_blank">
-            🎮 @lplayer_official
-        </a>
-        <p>🔔 قريباً على جميع المنصات!</p>
+    <div class="contact-card">
+      <div class="contact-icon">🎮</div>
+      <h3>تابعني على تيك توك</h3>
+      <p>كل جديد في عالم Free Fire ستجده على حسابي</p>
+      <a href="https://www.tiktok.com/@lplayer_official" target="_blank" class="tiktok-btn">
+        🎮 @lplayer_official
+      </a>
+      <div class="coming-soon">🔔 قريباً على جميع المنصات!</div>
     </div>
-</div>
+  </div>
+</section>
 
+<!-- (بقية الكود كما هو دون أي تغيير) -->
+<script>
+function sendSuggestion() {
+    const btn = document.getElementById('submit-btn');
+    const name = document.getElementById('userName').value;
+    const suggestion = document.getElementById('suggestionText').value;
+    const msgDiv = document.getElementById('suggestionMsg');
 
+    if (!name || !suggestion) {
+        alert("يرجى كتابة اسمك واقتراحك");
+        return;
+    }
+
+    btn.innerText = "جاري الإرسال...";
+    btn.disabled = true;
+
+    const templateParams = {
+        from_name: name,
+        message: suggestion,
+        reply_to: "b10393588@gmail.com" 
+    };
+
+    emailjs.send('service_9y9u6of', 'template_p9y9c6q', templateParams)
+        .then(function(response) {
+            msgDiv.style.display = "block";
+            msgDiv.innerText = "✅ تم استلام اقتراحك بنجاح! شكراً لك.";
+            btn.innerText = "تم الإرسال 👍";
+            
+            document.getElementById('userName').value = "";
+            document.getElementById('suggestionText').value = "";
+            
+            setTimeout(() => {
+                msgDiv.style.display = "none";
+                btn.innerText = "إرسال الاقتراح 🚀";
+                btn.disabled = false;
+            }, 4000);
+        }, function(error) {
+            alert("فشل الإرسال: " + JSON.stringify(error));
+            btn.innerText = "حاول مجدداً";
+            btn.disabled = false;
+        });
+}
+</script>
 <!-- NICKNAME GENERATOR -->
 <div class="divider"></div>
 <section id="nickname">
